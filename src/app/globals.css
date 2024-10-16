@@ -1,0 +1,96 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;
+  }
+}
+
+body {
+  font-family: 'DM Mono', sans-serif;
+  color: #4d4d4d;
+  background: white;
+}
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+.dm-mono {
+  font-family: 'DM Mono', monospace;
+}
+
+@layer base {
+  input[type="checkbox"] {
+    @apply appearance-none h-4 w-4 border border-neutral-300 rounded-none focus:ring-0  cursor-pointer;
+  }
+
+  /* Style for when the checkbox is checked */
+  input[type="checkbox"]:checked {
+    @apply bg-neutral-700 border-transparent ; /* Blue background when checked */
+    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>'); /* White checkmark */
+    background-size: 70% 70%;
+    background-position: center;
+    background-repeat: no-repeat;
+    
+  }
+
+  input[type="checkbox"]:focus {
+    @apply ring-0 ring-black;
+  }
+}
+
+
+
+.dashcomponent{
+  background-color: #ffffff;
+  /* border-radius: 0.5rem; */
+  /* border: 1px solid #d1d5db; */
+  /* box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05); */
+  padding: 1rem;
+  margin-top:40px;
+  font-size:small;
+
+}
+
+.dashloading{
+  background-color: #f5f5f5;
+  border-radius: 0.5rem;
+  border: 1px solid #d1d5db;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  padding: 1rem;
+  height: 320px;
+}
+
+    .responsive-padding {
+      padding: 50px;
+      padding-top: 0px;
+    }
+
+    @media (min-width: 768px) {
+      .responsive-padding {
+        padding: 100px;
+        padding-top: 0px;
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .responsive-padding {
+        padding: 200px;
+        padding-top: 0px;
+      }
+      .dashcomponent{
+        padding: 0rem;
+      }
+    }
+  
