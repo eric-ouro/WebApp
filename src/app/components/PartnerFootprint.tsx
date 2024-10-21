@@ -1,7 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import { MAPPING_DARK, MAPPING_LIGHT } from "../common/colors";
-import { COLORS_PARTNERS_LIGHTER } from "../common/colors";
+import { MAPPING_DARK, MAPPING_LIGHT, COLORS_PARTNER, COLORS_PARTNERS_LIGHTER } from "../common/colors";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "@/app/store";
 import { togglePartner } from "@/app/store/selectedPartnersSlice";
@@ -101,8 +100,8 @@ const CoverageBar = ({ partners, selectedPartners, filteredRecords, totalCoverag
       return (
         <div
           key={index}
-          className={`flex h-20 items-end justify-left min-w-[50px] text-white rounded-sm text-sm font-regular ${clickable ? 'cursor-pointer' : ''} ${
-            isValidPartners ? ` h-4 ${isSelected ? 'bg-neutral-500' : 'bg-neutral-300'}` : 'bg-black'
+          className={`flex h-20 items-end justify-left min-w-[50px] text-white rounded-sm text-sm font-regular  ${clickable ? 'cursor-pointer' : ''} ${
+            isValidPartners ? ` h-4 ${isSelected ? COLORS_PARTNER[partner.CompanyID] : COLORS_PARTNERS_LIGHTER[partner.CompanyID]}` : COLORS_PARTNER[partner.CompanyID]
           }`}
           onClick={clickable ? () => dispatch(togglePartner(partner as unknown as PartnersRecord)) : undefined}
           style={{

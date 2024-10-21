@@ -1,7 +1,6 @@
 "use client";
 import React, { useState } from "react";
 import { MAPPING_DARK, MAPPING_LIGHT } from "@/app/common/colors";
-// import { COLORS_FACILITIES_LIGHTER } from "@/app/common/colors";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "@/app/store";
 import { toggleFacility } from "@/app/store/selectedFacilitiesSlice";

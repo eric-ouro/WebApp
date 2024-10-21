@@ -1,4 +1,4 @@
-import { Plastic } from "./types";
+import { PartnerCompanyID, Plastic } from "./types";
 
   // Define the color mapping based on the label
   export const MAPPING_LIGHT: Record<Plastic, string> = {
@@ -41,14 +41,13 @@ import { Plastic } from "./types";
     6: 'bg-custom-pink',
   };
 
-  export const COLORS_PARTNERS_LIGHTER: Record<number, string> = {
-    0: 'bg-custom-red-lighter',  // custom-red lighter
-    1: 'bg-custom-blue-lighter',   // custom-blue lighter
-    2: 'bg-custom-yellow-lighter',    // custom-yellow lighter
-    3: 'bg-custom-blue-lighter', // custom-blue lighter
-    4: 'bg-custom-sky-lighter',  // custom-sky lighter
-    5: 'bg-custom-orange-lighter',    // custom-orange lighter
-    6: 'bg-custom-pink-lighter',   // custom-pink lighter
+  export const COLORS_PARTNER: Record<any, string> = {
+    3: 'bg-custom-neutral-darker',
+    4: 'bg-custom-neutral-medium',
+  };
+  export const COLORS_PARTNERS_LIGHTER: Record<any, string> = {
+    3: 'bg-custom-neutral-lighter',
+    4: 'bg-custom-neutral-lighterMedium',
   };
 
 

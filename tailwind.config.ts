@@ -43,9 +43,9 @@ module.exports = {
           lighter: '#9E9BFF',  // 25% lighter color
         },
         'custom-brown': {
-          DEFAULT: '#7A5A3A',  // 30% desaturated color
-          darker: '#523D28',   // 30% desaturated and 30% darker color
-          lighter: '#8F6A4A',  // 30% desaturated and 25% lighter color
+          DEFAULT: '#ac835a',  // New default color
+          darker: '#755b3f',   // 30% darker color
+          lighter: '#d1a885',  // 25% lighter color
         },
         'custom-yellow': {
           DEFAULT: '#EDCF0E',
@@ -72,6 +72,14 @@ module.exports = {
           darker: '#347136',
           lighter: '#79D17D',  // 25% lighter color
         },
+        'custom-neutral': {
+          darker: '#8B7D74',
+          dark: '#A19685',
+          medium: '#B8A382', 
+          lighter: '#D3C6BC',  // 20% lighter than dark
+          lighterMedium: '#E1D1C6',  // 20% lighter than medium
+        },
+        
       },
       
     },

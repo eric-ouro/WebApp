@@ -113,7 +113,7 @@ const PlasticFootprintMultiStackedBar = () => {
       headerText="Plastic Footprint & Recycle Rates"
       />
       <div className="overflow-x-auto">
-        <table className="min-w-full bg-white table-auto">
+        <table className="min-w-full table-auto">
           <thead className="cursor-pointer text-xs text-left ">
             <tr className="h-12">
               <th className="text-neutral-400 text-xs text-left min-w-[80px] font-normal ">Plastic</th>
