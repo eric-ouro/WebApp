@@ -55,8 +55,8 @@ const PartnerFootprint = () => {
   return (
     <div className="dashcomponent">
       <DashboardDisplayHeader headerText="Plastic Footprint & Recycle Rates Per Partner" />
-      <CoverageBar partners={selectedPartners} filteredRecords={filteredRecords} totalCoverage={totalCoverage} clickable dispatch={dispatch} />
-      <CoverageBar partners={validPartners} filteredRecords={records} selectedPartners={selectedPartners} totalCoverage={globalCoverage} clickable dispatch={dispatch} isValidPartners />
+      <CoverageBar partners={validPartners} filteredRecords={filteredRecords} totalCoverage={totalCoverage} clickable dispatch={dispatch} />
+      <CoverageBar partners={validPartners} filteredRecords={records} selectedPartners={selectedPartners} totalCoverage={globalCoverage} clickable dispatch={dispatch} isBottom />
       {selectedPartners.map(partner => (
         <PartnerDetails
           key={partner.CompanyID}
@@ -85,7 +85,7 @@ const ErrorComponent = ({ error }: { error: string }) => (
   <div>{`ERROR: ${error}`}</div>
 );
 
-const CoverageBar = ({ partners, selectedPartners, filteredRecords, totalCoverage, clickable = false, dispatch, isValidPartners = false }: any) => (
+const CoverageBar = ({ partners, selectedPartners, filteredRecords, totalCoverage, clickable = false, dispatch, isBottom = false }: any) => (
   <div className={`flex gap-1 mb-2 ${clickable ? 'overflow-hidden' : 'rounded overflow-hidden min-h-[70px]'}`}>
     {partners.map((partner: { CompanyID: string, CompanyName: string }, index: number) => {
       const partnerRecords = filteredRecords.filter((record: { PartnerCompanyID: string }) => record.PartnerCompanyID === partner.CompanyID);
@@ -101,7 +101,8 @@ const CoverageBar = ({ partners, selectedPartners, filteredRecords, totalCoverag
         <div
           key={index}
           className={`flex h-20 items-end justify-left min-w-[50px] text-white rounded-sm text-sm font-regular  ${clickable ? 'cursor-pointer' : ''} ${
-            isValidPartners ? ` h-4 ${isSelected ? COLORS_PARTNER[partner.CompanyID] : COLORS_PARTNERS_LIGHTER[partner.CompanyID]}` : COLORS_PARTNER[partner.CompanyID]
+            coveragePercentage === 0 ? 'hidden' :
+            isBottom ? ` h-4 ${isSelected ? COLORS_PARTNER[partner.CompanyID] : COLORS_PARTNERS_LIGHTER[partner.CompanyID]}` : COLORS_PARTNER[partner.CompanyID]
           }`}
           onClick={clickable ? () => dispatch(togglePartner(partner as unknown as PartnersRecord)) : undefined}
           style={{
@@ -109,7 +110,7 @@ const CoverageBar = ({ partners, selectedPartners, filteredRecords, totalCoverag
             transition: "background-color 200ms ease",
           }}
         >
-          <div className={`p-2 w-0  ${isValidPartners ? 'hidden' : ''}`}>   
+          <div className={`p-2 w-0  ${isBottom ? 'hidden' : ''}`}>   
             {displayLabel}
             <div>
               {coveragePercentage.toFixed(1)}%
