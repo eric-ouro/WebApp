@@ -42,6 +42,7 @@ body {
     background-size: 70% 70%;
     background-position: center;
     background-repeat: no-repeat;
+    flex-shrink: 0;
     
   }
 
