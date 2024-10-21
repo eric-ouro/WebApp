@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import { MAPPING_DARK, MAPPING_LIGHT } from "@/app/common/colors";
+import { MAPPING_DARK, MAPPING_LIGHT, COLORS_FACILITY, COLORS_FACILITIES_LIGHTER } from "@/app/common/colors";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "@/app/store";
 import { toggleFacility } from "@/app/store/selectedFacilitiesSlice";
@@ -59,8 +59,8 @@ const FacilityFootprint = () => {
   return (
     <div className="dashcomponent">
       <DashboardDisplayHeader headerText="Plastic Footprint & Recycle Rates Per Facility" />
-      <CoverageBar facilities={selectedFacilities} filteredRecords={filteredRecords} totalCoverage={totalCoverage} clickable dispatch={dispatch} />
-      <CoverageBar facilities={validFacilities} filteredRecords={records} selectedFacilities={selectedFacilities} totalCoverage={globalCoverage} clickable dispatch={dispatch} isValidFacilities />
+      <CoverageBar facilities={validFacilities} filteredRecords={filteredRecords} totalCoverage={totalCoverage} clickable dispatch={dispatch} />
+      <CoverageBar facilities={validFacilities} filteredRecords={records} selectedFacilities={selectedFacilities} totalCoverage={globalCoverage} clickable dispatch={dispatch} isBottom />
       {selectedFacilities.map(facility => (
         <FacilityDetails
           key={facility.facilityID}
@@ -102,7 +102,7 @@ const calculateTotalCoverage = (facilities: any[], records: RecyclingRecord[]) =
   }, 0);
 };
 
-const CoverageBar = ({ facilities, selectedFacilities, filteredRecords, totalCoverage, clickable = false, dispatch, isValidFacilities = false }: any) => (
+const CoverageBar = ({ facilities, selectedFacilities, filteredRecords, totalCoverage, clickable = false, dispatch, isBottom = false }: any) => (
   <div className={`flex gap-1 ${clickable ? 'mb-2 overflow-hidden' : 'rounded overflow-hidden min-h-[70px] mb-2'}`}>
     {facilities.map((facility: { facilityID: string, facilityName: string }, index: number) => {
       const facilityRecords = filteredRecords.filter((record: { FacilityID: string }) => record.FacilityID === facility.facilityID);
@@ -118,8 +118,9 @@ const CoverageBar = ({ facilities, selectedFacilities, filteredRecords, totalCov
       return (
         <div
           key={index}
-          className={`flex h-20 items-end justify-left min-w-[50px] text-white rounded-sm text-sm font-regular ${clickable ? 'cursor-pointer' : ''} ${
-            isValidFacilities ? `h-4 ${isSelected ? 'bg-neutral-500' : 'bg-neutral-300'}` : 'bg-black'
+          className={`flex items-end justify-left text-white rounded-sm text-sm font-regular ${clickable ? 'cursor-pointer' : ''} ${
+            coveragePercentage === 0 ? 'hidden' :
+            isBottom ? `h-4 ${isSelected ? COLORS_FACILITY[facility.facilityID] : COLORS_FACILITIES_LIGHTER[facility.facilityID]}` : COLORS_FACILITY[facility.facilityID]
           }`}
           onClick={clickable ? () => dispatch(toggleFacility(facility as unknown as FacilitiesRecord)) : undefined}
           style={{
@@ -127,7 +128,7 @@ const CoverageBar = ({ facilities, selectedFacilities, filteredRecords, totalCov
             transition: "background-color 200ms ease",
           }}
         >
-          <div className={`p-2 w-0  ${isValidFacilities ? 'hidden' : ''}`}>  
+          <div className={`p-2 w-0  ${isBottom ? 'hidden' : ''}`}>  
             {displayLabel}
             <div>
               {coveragePercentage.toFixed(1)}%

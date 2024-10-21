@@ -100,9 +100,10 @@ const CoverageBar = ({ partners, selectedPartners, filteredRecords, totalCoverag
       return (
         <div
           key={index}
-          className={`flex h-20 items-end justify-left min-w-[50px] text-white rounded-sm text-sm font-regular  ${clickable ? 'cursor-pointer' : ''} ${
+          className={`flex items-end justify-left min-w-[50px] text-white rounded-sm text-sm font-regular  ${clickable ? 'cursor-pointer' : ''} ${
             coveragePercentage === 0 ? 'hidden' :
             isBottom ? ` h-4 ${isSelected ? COLORS_PARTNER[partner.CompanyID] : COLORS_PARTNERS_LIGHTER[partner.CompanyID]}` : COLORS_PARTNER[partner.CompanyID]
+            
           }`}
           onClick={clickable ? () => dispatch(togglePartner(partner as unknown as PartnersRecord)) : undefined}
           style={{

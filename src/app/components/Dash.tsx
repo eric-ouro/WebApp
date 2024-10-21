@@ -35,7 +35,7 @@ const Dash = () => {
         </div>
       <PartnerFootprint />
       <FacilityFootprint />
-      <StorePrinter />
+      {/* <StorePrinter /> */}
     </div>
   );
 };

@@ -49,6 +49,14 @@ import { PartnerCompanyID, Plastic } from "./types";
     3: 'bg-custom-neutral-lighter',
     4: 'bg-custom-neutral-lighterMedium',
   };
+  export const COLORS_FACILITY: Record<any, string> = {
+    1: 'bg-custom-neutral-darker',
+    16 : 'bg-custom-neutral-medium',
+  };
+  export const COLORS_FACILITIES_LIGHTER: Record<any, string> = {
+    1: 'bg-custom-neutral-lighter',
+    16 : 'bg-custom-neutral-lighterMedium',
+  };
 
 
   //explicit colors for charts js.
