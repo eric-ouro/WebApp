@@ -39,7 +39,7 @@ const Dash = () => {
           <PartnerFootprint />
           <FacilityFootprint />
         </div>
-   
+        <h5 className="text-center text-neutral-400 text-sm">© COPYRIGHT OURO CIRCULARITY 2025</h5>
         
       {/* <StorePrinter /> */}
     </div>
