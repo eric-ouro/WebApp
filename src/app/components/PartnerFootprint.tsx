@@ -14,6 +14,7 @@ type SortKey = 'percentage' | 'quantity' | 'recycled' | 'recyclingLossRate' | 'p
 const PartnerFootprint = () => {
   const selectedPartners = useSelector((state: RootState) => state.selectedPartners.selectedPartners);
   const selectedPlastics = useSelector((state: RootState) => state.selectedPlastics.selectedPlastics);
+  const selectedFacilities = useSelector((state: RootState) => state.selectedFacilities.selectedFacilities);
   const validPartners = useSelector((state: RootState) => state.validPartners.partners);
   const selectedPartnerFacilities = useSelector((state: RootState) => state.selectedPartnerFacilities.selectedPartnerFacilities);
   const plastics = useSelector((state: RootState) => state.recyclingRecords);
@@ -31,7 +32,7 @@ const PartnerFootprint = () => {
   }
 
   const { records } = plastics;
-  const filteredRecords = filterRecords(records, selectedPartners, selectedPartnerFacilities);
+  const filteredRecords = filterRecords(records, selectedPartners, selectedPartnerFacilities, selectedFacilities);
 
   const requestSort = (key: SortKey) => {
     setSortConfig(prev => ({
@@ -240,11 +241,12 @@ const calculateStatistics = (summaries: ReturnType<typeof calculateSummaries>) =
   return { totalQuantity, largestFootprintPercentage };
 };
 
-const filterRecords = (records: RecyclingRecord[], selectedPartners: any[], selectedPartnerFacilities: any[]) => {
+const filterRecords = (records: RecyclingRecord[], selectedPartners: any[], selectedPartnerFacilities: any[], selectedFacilities: any[]) => {
   return records.filter(record => {
     const partnerMatch = selectedPartners.some(partner => partner.CompanyID === record.PartnerCompanyID);
     const partnerFacilityMatch = selectedPartnerFacilities.some(facility => facility.facilityID === record.PartnerFacilityID);
-    return partnerMatch && partnerFacilityMatch;
+    const facilityMatch = selectedFacilities.some(facility => facility.facilityID === record.FacilityID);
+    return partnerMatch && partnerFacilityMatch && facilityMatch;
   });
 };
 

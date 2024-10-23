@@ -1,24 +1,26 @@
 "use client";
 import React, { useState } from "react";
-import { MAPPING_DARK, MAPPING_LIGHT, COLORS_FACILITY, COLORS_FACILITIES_LIGHTER } from "@/app/common/colors";
+import { MAPPING_DARK, MAPPING_LIGHT, COLORS_FACILITY, COLORS_FACILITIES_LIGHTER } from "../common/colors";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "@/app/store";
 import { toggleFacility } from "@/app/store/selectedFacilitiesSlice";
 import DashboardDisplayHeader from "./DashboardDisplayHeader";
 import { calculateItemRatios } from "@/app/utils/calculateItemRatios";
 import { calculateSummaries } from "@/app/utils/calculateSummaries";
-import { FacilitiesRecord, RecyclingRecord } from '@/app/common/types';
+import { FacilitiesRecord, RecyclingRecord } from '../common/types';
 
 type SortKey = 'percentage' | 'quantity' | 'recycled' | 'recyclingLossRate' | 'processingLossRate';
 
 const FacilityFootprint = () => {
-  const selectedFacilities = useSelector((state: RootState) => state.selectedFacilities.selectedFacilities);
+  const selectedPartners = useSelector((state: RootState) => state.selectedPartners.selectedPartners);
   const selectedPlastics = useSelector((state: RootState) => state.selectedPlastics.selectedPlastics);
+  const selectedFacilities = useSelector((state: RootState) => state.selectedFacilities.selectedFacilities);
+  // const validPartners = useSelector((state: RootState) => state.validPartners.partners);
   const validFacilities = useSelector((state: RootState) => state.validFacilities.Facilities);
-  
+  const selectedPartnerFacilities = useSelector((state: RootState) => state.selectedPartnerFacilities.selectedPartnerFacilities);
   const plastics = useSelector((state: RootState) => state.recyclingRecords);
   const dispatch = useDispatch();
-  // console.log(selectedFacilities);
+
 
   const [sortConfig, setSortConfig] = useState({ key: 'percentage', direction: 'descending' });
 
@@ -31,7 +33,7 @@ const FacilityFootprint = () => {
   }
 
   const { records } = plastics;
-  const filteredRecords = filterRecords(records, selectedFacilities );
+  const filteredRecords = filterRecords(records, selectedPartners, selectedPartnerFacilities, selectedFacilities);
 
   const requestSort = (key: SortKey) => {
     setSortConfig(prev => ({
@@ -39,10 +41,6 @@ const FacilityFootprint = () => {
       direction: prev.key === key && prev.direction === 'ascending' ? 'descending' : 'ascending'
     }));
   };
-
-  const totalCoverage = calculateTotalCoverage(selectedFacilities, filteredRecords);
-  const globalCoverage = calculateTotalCoverage(validFacilities, records);
-
   const largestQuantity = selectedFacilities.reduce((max, facility) => {
     const facilityRecords = filteredRecords.filter(record => record.FacilityID === facility.facilityID);
     const facilitySummaries = calculateSummaries(facilityRecords);
@@ -52,13 +50,13 @@ const FacilityFootprint = () => {
     return facilityMaxQuantity > max ? facilityMaxQuantity : max;
   }, 0);
 
-  // console.log(largestQuantity)
 
-
+  const totalCoverage = calculateTotalCoverage(selectedFacilities, filteredRecords);
+  const globalCoverage = calculateTotalCoverage(validFacilities, records);
 
   return (
     <div className="dashcomponent">
-      <DashboardDisplayHeader headerText="Plastic Footprint & Recycle Rates Per Facility" />
+      <DashboardDisplayHeader headerText="Plastic Footprint & Recycle Rates Per Partner" />
       <CoverageBar facilities={validFacilities} filteredRecords={filteredRecords} totalCoverage={totalCoverage} clickable dispatch={dispatch} />
       <CoverageBar facilities={validFacilities} filteredRecords={records} selectedFacilities={selectedFacilities} totalCoverage={globalCoverage} clickable dispatch={dispatch} isBottom />
       {selectedFacilities.map(facility => (
@@ -77,6 +75,8 @@ const FacilityFootprint = () => {
   );
 };
 
+
+
 const LoadingComponent = () => (
   <div className="bg-neutral-100 rounded-lg border shadow-sm p-6 h-[214px]">
     <div className="h4 w-[180px] rounded-full bg-neutral-300">&nbsp;</div>
@@ -87,40 +87,25 @@ const ErrorComponent = ({ error }: { error: string }) => (
   <div>{`ERROR: ${error}`}</div>
 );
 
-const filterRecords = (records: RecyclingRecord[], selectedFacilities: any[]) => {
-  return records.filter(record => {
-    const facilityMatch = selectedFacilities.some(facility => facility.facilityID === record.FacilityID);
-    return facilityMatch 
-  });
-};
-
-const calculateTotalCoverage = (facilities: any[], records: RecyclingRecord[]) => {
-  return facilities.reduce((sum, facility) => {
-    const facilityRecords = records.filter(record => record.FacilityID === facility.facilityID);
-    const facilitySummaries = calculateSummaries(facilityRecords);
-    return sum + facilitySummaries.reduce((coverage, summary) => coverage + summary.quantity, 0);
-  }, 0);
-};
-
 const CoverageBar = ({ facilities, selectedFacilities, filteredRecords, totalCoverage, clickable = false, dispatch, isBottom = false }: any) => (
-  <div className={`flex gap-1 ${clickable ? 'mb-2 overflow-hidden' : 'rounded overflow-hidden min-h-[70px] mb-2'}`}>
+  <div className={`flex gap-1 mb-2 ${clickable ? 'overflow-hidden' : 'rounded overflow-hidden min-h-[70px]'}`}>
     {facilities.map((facility: { facilityID: string, facilityName: string }, index: number) => {
       const facilityRecords = filteredRecords.filter((record: { FacilityID: string }) => record.FacilityID === facility.facilityID);
       const facilitySummaries = calculateSummaries(facilityRecords);
       const facilityCoverage = facilitySummaries.reduce((coverage, summary) => coverage + summary.quantity, 0);
       const coveragePercentage = (facilityCoverage / totalCoverage) * 100;
- 
+
       const isSelected = selectedFacilities?.some((f: { facilityID: string }) => f.facilityID === facility.facilityID) ?? false;
       const displayLabel = facility.facilityName === 'Mixed' ? 'MIXED' : facility.facilityName;
 
-      // console.log('Is Selected:', isSelected);
 
       return (
         <div
           key={index}
-          className={`flex items-end justify-left text-white rounded-sm text-sm font-regular ${clickable ? 'cursor-pointer' : ''} ${
+          className={`flex items-end justify-left min-w-[50px] text-white rounded-sm text-sm font-regular  ${clickable ? 'cursor-pointer' : ''} ${
             coveragePercentage === 0 ? 'hidden' :
-            isBottom ? `h-4 ${isSelected ? COLORS_FACILITY[facility.facilityID] : COLORS_FACILITIES_LIGHTER[facility.facilityID]}` : COLORS_FACILITY[facility.facilityID]
+            isBottom ? ` h-4 ${isSelected ? COLORS_FACILITY[facility.facilityID] : COLORS_FACILITIES_LIGHTER[facility.facilityID]}` : COLORS_FACILITY[facility.facilityID]
+            
           }`}
           onClick={clickable ? () => dispatch(toggleFacility(facility as unknown as FacilitiesRecord)) : undefined}
           style={{
@@ -128,7 +113,7 @@ const CoverageBar = ({ facilities, selectedFacilities, filteredRecords, totalCov
             transition: "background-color 200ms ease",
           }}
         >
-          <div className={`p-2 w-0  ${isBottom ? 'hidden' : ''}`}>  
+          <div className={`p-2 w-0  ${isBottom ? 'hidden' : ''}`}>   
             {displayLabel}
             <div>
               {coveragePercentage.toFixed(1)}%
@@ -191,7 +176,7 @@ const FacilityDetails = ({ facility, filteredRecords, selectedPlastics, sortConf
   );
 };
 
-const SummaryRow = ({ item, totalQuantity, largestQuantity }: any) => {
+const SummaryRow = ({ item, totalQuantity, largestQuantity}: any) => {
   const displayLabel = item.label === 'MixedPlastic' ? 'MIXED' : item.label;
   const rates = calculateItemRatios(item);
   const recycleRate = rates.get('recycleRate');
@@ -200,6 +185,8 @@ const SummaryRow = ({ item, totalQuantity, largestQuantity }: any) => {
   const minWidth = item.quantity > 0 ? '10%' : '0';
   const footprintPercentage = totalQuantity > 0 ? (item.quantity / totalQuantity) * 100 : 0;
   const normalizedWidth = (item.quantity / largestQuantity);
+  // const footprintPercentage = totalQuantity > 0 ? (item.quantity / totalQuantity) * 100 : 0;
+  // const normalizedWidth = (footprintPercentage / largestFootprintPercentage) * 100;
 
   return (
     <tr className="align-middle text-right h-[44px]">
@@ -210,7 +197,7 @@ const SummaryRow = ({ item, totalQuantity, largestQuantity }: any) => {
         </span>
       </td>
       <td className="text-left max-w-[60px]">{footprintPercentage.toFixed(1)}%</td>
-      <td className="text-right min-w-[80px]">{item.quantity.toFixed(1)}&nbsp;Tn</td>
+      <td className="text-right w-[80px]">{item.quantity.toFixed(1)}&nbsp;Tn</td>
       <td className="w-[100%] px-[20px]">
         <div
           className="h-[34px] text-left overflow-hidden rounded-sm flex"
@@ -243,6 +230,8 @@ const SummaryRow = ({ item, totalQuantity, largestQuantity }: any) => {
   );
 };
 
+
+// HELPER FUNCTIONS
 const getHeaderClass = (key: SortKey, sortConfig: any) => {
   return sortConfig.key === key ? 'text-black' : 'text-neutral-400';
 };
@@ -251,6 +240,23 @@ const calculateStatistics = (summaries: ReturnType<typeof calculateSummaries>) =
   const totalQuantity = summaries.reduce((sum, item) => sum + item.quantity, 0);
   const largestFootprintPercentage = summaries.reduce((max, item) => item.quantity > max.quantity ? item : max, summaries[0]);
   return { totalQuantity, largestFootprintPercentage };
+};
+//havnt done this yet
+const filterRecords = (records: RecyclingRecord[], selectedPartners: any[], selectedPartnerFacilities: any[], selectedFacilities: any[]) => {
+  return records.filter(record => {
+    const partnerMatch = selectedPartners.some(partner => partner.CompanyID === record.PartnerCompanyID);
+    const partnerFacilityMatch = selectedPartnerFacilities.some(facility => facility.facilityID === record.PartnerFacilityID);
+    const facilityMatch = selectedFacilities.some(facility => facility.facilityID === record.FacilityID);
+    return partnerMatch && partnerFacilityMatch && facilityMatch;
+  });
+};
+
+const calculateTotalCoverage = (facilities: any[], records: RecyclingRecord[]) => {
+  return facilities.reduce((sum, facility) => {
+    const facilityRecords = records.filter(record => record.FacilityID === facility.facilityID);
+    const facilitySummaries = calculateSummaries(facilityRecords);
+    return sum + facilitySummaries.reduce((coverage, summary) => coverage + summary.quantity, 0);
+  }, 0);
 };
 
 export default FacilityFootprint;
