@@ -147,6 +147,7 @@ const PartnerDetails = ({ partner, filteredRecords, selectedPlastics, sortConfig
   return (
     <div className="mt-8 mb-12">
       <div className="flex items-center mb-2">
+        <span className={`inline-block w-1 h-3 rounded-full mr-2 ${COLORS_PARTNER[partner.CompanyID]}`}></span>
         <h3 className="mr-4">{partner.CompanyName}</h3>
         <div className="flex-grow border-t border-neutral-200 mx-4" style={{ height: '1px' }}></div>
         <h3 className="ml-4">{coveragePercentage.toFixed(1)}%</h3>

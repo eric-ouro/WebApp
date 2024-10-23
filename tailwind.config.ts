@@ -86,6 +86,9 @@ module.exports = {
           lighter: '#C6D3BC', // 20% lighter than dark
           lighterMedium: '#D1E1C6',  // 20% lighter than medium
         },
+        'custom-light-tan':{
+          DEFAULT: '#f7f4e9;'
+        }
         
       },
       
