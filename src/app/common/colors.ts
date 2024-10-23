@@ -42,20 +42,20 @@ import { PartnerCompanyID, Plastic } from "./types";
   };
 
   export const COLORS_PARTNER: Record<any, string> = {
-    3: 'bg-custom-neutral-darker',
-    4: 'bg-custom-neutral-medium',
+    3: 'bg-custom-neutral-brown-darker',
+    4: 'bg-custom-neutral-brown-medium',
   };
   export const COLORS_PARTNERS_LIGHTER: Record<any, string> = {
-    3: 'bg-custom-neutral-lighter',
-    4: 'bg-custom-neutral-lighterMedium',
+    3: 'bg-custom-neutral-brown-lighter',
+    4: 'bg-custom-neutral-brown-lighterMedium',
   };
   export const COLORS_FACILITY: Record<any, string> = {
-    1: 'bg-custom-neutral-darker',
-    16 : 'bg-custom-neutral-medium',
+    1: 'bg-custom-neutral-green-darker',
+    16 : 'bg-custom-neutral-green-medium',
   };
   export const COLORS_FACILITIES_LIGHTER: Record<any, string> = {
-    1: 'bg-custom-neutral-lighter',
-    16 : 'bg-custom-neutral-lighterMedium',
+    1: 'bg-custom-neutral-green-lighter',
+    16 : 'bg-custom-neutral-green-lighterMedium',
   };
 
 

@@ -55,7 +55,7 @@ const PartnerFootprint = () => {
 
   return (
     <div className="dashcomponent">
-      <DashboardDisplayHeader headerText="Plastic Footprint & Recycle Rates Per Partner" />
+      <DashboardDisplayHeader headerText="Plastic Footprint & Recycle Rates / Partner" />
       <CoverageBar partners={validPartners} filteredRecords={filteredRecords} totalCoverage={totalCoverage} clickable dispatch={dispatch} />
       <CoverageBar partners={validPartners} filteredRecords={records} selectedPartners={selectedPartners} totalCoverage={globalCoverage} clickable dispatch={dispatch} isBottom />
       {selectedPartners.map(partner => (

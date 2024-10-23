@@ -72,12 +72,19 @@ module.exports = {
           darker: '#347136',
           lighter: '#79D17D',  // 25% lighter color
         },
-        'custom-neutral': {
+        'custom-neutral-brown': {
           darker: '#8B7D74',
           dark: '#A19685',
           medium: '#B8A382', 
           lighter: '#D3C6BC',  // 20% lighter than dark
           lighterMedium: '#E1D1C6',  // 20% lighter than medium
+        },
+        'custom-neutral-green': {
+          darker: '#6B8B47',  // Darker shade of light yellowy green
+          dark: '#85A196',    // Dark shade of light yellowy green
+          medium: '#A3B882',  // Medium shade of light yellowy green
+          lighter: '#C6D3BC', // 20% lighter than dark
+          lighterMedium: '#D1E1C6',  // 20% lighter than medium
         },
         
       },

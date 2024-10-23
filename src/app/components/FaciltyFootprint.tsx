@@ -56,7 +56,7 @@ const FacilityFootprint = () => {
 
   return (
     <div className="dashcomponent">
-      <DashboardDisplayHeader headerText="Plastic Footprint & Recycle Rates Per Partner" />
+      <DashboardDisplayHeader headerText="Plastic Footprint & Recycle Rates / Facility" />
       <CoverageBar facilities={validFacilities} filteredRecords={filteredRecords} totalCoverage={totalCoverage} clickable dispatch={dispatch} />
       <CoverageBar facilities={validFacilities} filteredRecords={records} selectedFacilities={selectedFacilities} totalCoverage={globalCoverage} clickable dispatch={dispatch} isBottom />
       {selectedFacilities.map(facility => (

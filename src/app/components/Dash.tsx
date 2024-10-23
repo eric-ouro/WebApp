@@ -14,6 +14,7 @@ import MixedPlasticFootprint from "./MixedPlasticFootprint";
 import MixedPlasticFootprintSimple from "./MixedPlasticFootprintSimple";
 import MixedPlasticFootprintMultiStackedBar from "./MixedPlasticFootprintMultiStackedBar";
 import FacilityFootprint from "./FaciltyFootprint";
+import DashboardDisplayHeader from "./DashboardDisplayHeader";
 const Dash = () => {
   
   useGetTheData();
@@ -22,19 +23,24 @@ const Dash = () => {
   return (
     <div className="responsive-padding min-h-screen flex flex-col gap-8">
       <Navbar />
-  
-        <div className="flex flex-col gap-4">
+        <DashboardDisplayHeader headerText="Plastics" />
+
+        <div className="flex flex-row gap-4">
           <PlasticFootprintSimple />
           <PlasticFootprintMultiStackedBar />
         </div>
-    
-   
-        <div className="flex flex-col gap-4">
+        <DashboardDisplayHeader headerText="Mixed Plastics" />
+        <div className="flex flex-row gap-4">
           <MixedPlasticFootprintSimple />
           <MixedPlasticFootprintMultiStackedBar />
         </div>
-      <PartnerFootprint />
-      <FacilityFootprint />
+        <DashboardDisplayHeader headerText="Partners & Facilities" />
+        <div className="flex flex-row gap-4">
+          <PartnerFootprint />
+          <FacilityFootprint />
+        </div>
+   
+        
       {/* <StorePrinter /> */}
     </div>
   );
