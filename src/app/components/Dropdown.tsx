@@ -38,18 +38,18 @@ const Dropdown: React.FC<DropdownProps> = ({
     <div className="relative">
       <button onClick={onToggle} className={`flex flex-col focus:outline-none  ${subTitle ? 'items-start' : 'items-end'}`}>
         <div className="flex justify-between items-start w-full h-8">
-          <div className="text-xs uppercase text-neutral-600 text-left">{subTitle}</div>
+          <div className="text-sm uppercase text-neutral-600 opacity-70 text-left">{subTitle}</div>
           
         </div>
         <div className="flex justify-between items-top text-left uppercase" >
           <span className='text-sm text-left '>
             {getDropdownTitle().split(',').map((part, index, array) => (
-              <div key={index} className={`${index === array.length - 1 ? '' : 'mb-[8px]'} bg-neutral-100 tracking-wide text-xs`}>
+              <div key={index} className={`${index === array.length - 1 ? '' : 'mb-[8px]'} bg-custom-light-tan tracking-wide text-sm`}>
                 {part}
               </div>
             ))}
           </span>
-          <span className="flex-shrink-0 pl-3 bg-neutral-100 h-[14px]">
+          <span className="flex-shrink-0 pl-3 bg-custom-light-tan h-[14px]">
             {isOpen ? (
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -81,13 +81,13 @@ const Dropdown: React.FC<DropdownProps> = ({
         </div>
       </button>
       {isOpen && (
-        <div className="absolute bg-white border  shadow-lg p-1 mt-3  z-10 min-w-36">
-          <h3 className="text-xs px-2 pt-2 mb-1 border-neutral-100 border-solid border-b pb-2 uppercase tracking-widest">{title}</h3>
+        <div className="absolute bg-custom-light-tan border  shadow-lg p-1 mt-3  z-10 min-w-36">
+          <h3 className="text-sm px-2 pt-2 mb-1 border-neutral-100 border-solid border-b pb-2 uppercase tracking-widest">{title}</h3>
           <div className="max-h-86 overflow-y-auto ">
             {items.map((item) => (
               <label
                 key={getItemLabel(item)}
-                className="flex items-start justify-between py-2 px-2  cursor-pointer hover:bg-neutral-100"
+                className="flex items-start justify-between py-2 px-2  cursor-pointer hover:bg-custom-light-tan"
               >
                 <div className="flex items-center ">
                   {getItemColor && (
@@ -95,7 +95,7 @@ const Dropdown: React.FC<DropdownProps> = ({
                       className={`${getItemColor(item)} inline-block w-3 h-3 rounded-full mr-2`}
                     ></span>
                   )}
-                <span className="text-neutral-700 text-xs uppercase max-w-36 pr-4">{getItemLabel(item)}</span>
+                <span className="text-neutral-700  text-sm uppercase max-w-36 pr-4">{getItemLabel(item)}</span>
                 </div>
                 <input
                   type="checkbox"
@@ -110,13 +110,13 @@ const Dropdown: React.FC<DropdownProps> = ({
             <div className="px-2 pt-2 pb-1">
               <button
                 onClick={onSelectAll}
-                className="bg-neutral-200 text-neutral-700 px-[6px] py-[2px]  hover:bg-neutral-300 text-xs uppercase tracking-wide mr-2"
+                className="bg-neutral-200 text-neutral-700 px-[6px] py-[2px]  hover:bg-neutral-300 text-sm uppercase tracking-wide mr-2"
               >
                 All
               </button>
               <button
                 onClick={onSelectNone}
-                className="bg-neutral-200 text-neutral-700 px-[6px] py-[2px]  hover:bg-neutral-300 text-xs uppercase tracking-wide"
+                className="bg-neutral-200 text-neutral-700 px-[6px] py-[2px]  hover:bg-neutral-300 text-sm uppercase tracking-wide"
               >
                 Clear
               </button>

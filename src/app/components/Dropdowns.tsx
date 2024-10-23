@@ -114,7 +114,7 @@ const Dropdowns: React.FC = () => {
   return (
     <div className="flex flex-col" ref={dropdownRef}>
       <div className="">
-        <div className="flex space-x">
+        <div className="flex">
           <div className="flex items-bottom">
             <Dropdown
               title="Plastics"
@@ -129,8 +129,9 @@ const Dropdowns: React.FC = () => {
               isOpen={openDropdown === 'Plastics'}
               onToggle={() => handleToggle('Plastics')}
             />
-            <div className="  h-full mx-3"></div>
+           <div className=" border-l border-neutral-300 h-full mx-6"></div>
           </div>
+           
           <div className="flex items-bottom">
             <Dropdown
               title="Facilities"
@@ -144,7 +145,7 @@ const Dropdowns: React.FC = () => {
               isOpen={openDropdown === 'Facilities'}
               onToggle={() => handleToggle('Facilities')}
             />
-            <div className="  h-full mx-3"></div>
+            <div className=" border-l border-neutral-300 h-full mx-6"></div>
           </div>
           <div className="flex items-bottom">
             <Dropdown
@@ -159,7 +160,7 @@ const Dropdowns: React.FC = () => {
               isOpen={openDropdown === 'Partners'}
               onToggle={() => handleToggle('Partners')}
             />
-            <div className="  h-full mx-3"></div>
+            <div className=" border-l border-neutral-300 h-full mx-6"></div>
           </div>
           <div className="flex items-bottom">
             <Dropdown
@@ -174,7 +175,7 @@ const Dropdowns: React.FC = () => {
               isOpen={openDropdown === 'Partner Facilities'}
               onToggle={() => handleToggle('Partner Facilities')}
             />
-            <div className="  h-full  mx-3"></div>
+            <div className=" border-l border-neutral-300 h-full mx-6"></div>
           </div>
           <div className="flex items-bottom">
               <Dropdown
