@@ -32,8 +32,8 @@ const Dash = () => {
     
     <div className="responsive-padding min-h-screen flex flex-col gap-12 z-0 px-12 ">
         <div className="flex flex-col gap-3">
-          <h2 className="text-4xl inter mr-4 font-bold" >All Plastics</h2>
-          <div className=" border-b border-neutral-400 mb-2" ></div>
+          <h2 className="text-2xl inter mr-4 font-bold" >All Plastics</h2>
+          {/* <div className=" border-b border-neutral-400 mb-2" ></div> */}
           <div className="flex flex-col lg:flex-row gap-3">
             <PlasticFootprintSimple />
             <PlasticFootprintMultiStackedBar />
@@ -41,8 +41,8 @@ const Dash = () => {
         </div>
         
           <div className="flex flex-col gap-3">
-          <h2 className="text-4xl inter mr-4 font-bold" >Mixed Plastic</h2>
-          <div className=" border-b border-neutral-400 mb-2" ></div>
+          <h2 className="text-2xl inter mr-4 font-bold" >Mixed Plastic</h2>
+          {/* <div className=" border-b border-neutral-400 mb-2" ></div> */}
           <div className="flex flex-col lg:flex-row gap-3">
           <MixedPlasticFootprintSimple />
             <MixedPlasticFootprintMultiStackedBar />
@@ -50,8 +50,8 @@ const Dash = () => {
         </div>
 
         <div className="flex flex-col gap-3">
-          <h2 className="text-4xl inter mr-4 font-bold" >Partners</h2>
-          <div className=" border-b border-neutral-400 mb-2" ></div>
+          <h2 className="text-2xl inter mr-4 font-bold" >Partners</h2>
+          {/* <div className=" border-b border-neutral-400 mb-2" ></div> */}
           <div className="flex flex-col lg:flex-row gap-3">
           <PartnerFootprintSimple />
           <PartnerFootprintMultiStackedBar />
@@ -59,8 +59,8 @@ const Dash = () => {
         </div>
 
         <div className="flex flex-col gap-3">
-          <h2 className="text-4xl inter mr-4 font-bold" >My Facilities</h2>
-          <div className=" border-b border-neutral-400 mb-2" ></div>
+          <h2 className="text-2xl inter mr-4 font-bold" >My Facilities</h2>
+          {/* <div className=" border-b border-neutral-400 mb-2" ></div> */}
           <div className="flex flex-col lg:flex-row gap-3">
           <FacilityFootprintSimple />
           <FacilityFootprintMultiStackedBar />
