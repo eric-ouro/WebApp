@@ -109,18 +109,18 @@ const PlasticFootprintMultiStackedBar = () => {
 
   return (
     <div className="dashcomponent">
-      <DashboardDisplayHeader
+      {/* <DashboardDisplayHeader
       headerText="Plastic Footprint & Recycle Rates"
-      />
-      <div className="overflow-x-auto">
+      /> */}
+      <div className="overflow-x-auto m-4">
         <table className="min-w-full table-auto">
-          <thead className="cursor-pointer text-xs text-left ">
-            <tr className="h-12">
+          <thead className="cursor-pointer text-xs text-right ">
+            <tr className="">
               <th className="text-neutral-400 text-xs text-left min-w-[80px] font-normal ">Plastic</th>
               <th onClick={() => requestSort('percentage')} className={` text-left min-w-[60px] font-normal ${getHeaderClass('percentage')}`}>Footprint</th>
               <th  className={` min-w-[60px] font-normal ${getHeaderClass('percentage')}`}> </th>
               <th  className={`text-left font-normal ${getHeaderClass('percentage')}`}> </th>
-              <th onClick={() => requestSort('recycled')} className={` text-left min-w-[80px] font-normal ${getHeaderClass('recycled')}`}>Recycled</th>
+              <th onClick={() => requestSort('recycled')} className={` min-w-[80px] font-normal ${getHeaderClass('recycled')}`}>Recycled</th>
               <th onClick={() => requestSort('recyclingLossRate')} className={` min-w-[60px] font-normal ${getHeaderClass('recyclingLossRate')}`}>R Loss</th>
               <th onClick={() => requestSort('processingLossRate')} className={` min-w-[60px] font-normal ${getHeaderClass('processingLossRate')}`}>P Loss</th>
             </tr>
@@ -146,8 +146,8 @@ const PlasticFootprintMultiStackedBar = () => {
                     {displayLabel}
                   </span>
                   </td>
-                  <td className=" max-w-[60px]">{footprintPercentage.toFixed(1)}%</td>
-                  <td className="text-left max-w-[60px]">{item.quantity.toFixed(1).padStart(4, '0')}&nbsp;Tn</td>
+                  <td className=" max-w-[60px]">{footprintPercentage.toFixed(1).padStart(4, '0')}%</td>
+                  <td className="text-left max-w-[60px] text-neutral-400">{item.quantity.toFixed(1).padStart(4, '0')}Tn</td>
                   
                   
                   <td className="w-[100%] px-[20px]">
@@ -184,9 +184,9 @@ const PlasticFootprintMultiStackedBar = () => {
                       </div>
                     </div>
                   </td>
-                  <td className=" max-w-[60px]">{recycleRate.toFixed(1)}%</td>
-                  <td className=" max-w-[60px]">{recyclingLossRate.toFixed(1)}%</td>
-                  <td className=" max-w-[60px]">{processingLossRate.toFixed(1)}%</td>
+                  <td className=" text-right max-w-[60px]">{recycleRate.toFixed(1)}%</td>
+                  <td className=" text-right max-w-[60px]">{recyclingLossRate.toFixed(1)}%</td>
+                  <td className=" text-right max-w-[60px]">{processingLossRate.toFixed(1)}%</td>
                 </tr>
               );
             })}

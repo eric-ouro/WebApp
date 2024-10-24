@@ -73,9 +73,9 @@ const PlasticFootprint = () => {
   return (
     <div className="dashcomponent">
       <div className="flex flex-col gap-1 overflow-hidden h-full">
-      <DashboardDisplayHeader
+      {/* <DashboardDisplayHeader
         headerText="Plastic Footprint & Recycle Rates"
-      />
+      /> */}
         <div className="flex-grow flex gap-1 h-[300px]">
           {sortedSelectedData.map((item, index) => {
             const totalWidthPercentage =

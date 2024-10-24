@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import { MAPPING_DARK, MAPPING_LIGHT, COLORS_FACILITY, COLORS_FACILITIES_LIGHTER } from "../common/colors";
+import { COLORS_FACILITIES, COLORS_FACILITIES_LIGHTER, MAPPING_LIGHT, MAPPING_DARK } from "../common/colors";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "@/app/store";
 import { toggleFacility } from "@/app/store/selectedFacilitiesSlice";
@@ -11,11 +11,10 @@ import { FacilitiesRecord, RecyclingRecord } from '../common/types';
 
 type SortKey = 'percentage' | 'quantity' | 'recycled' | 'recyclingLossRate' | 'processingLossRate';
 
-const FacilityFootprint = () => {
+const FacilityFootprintMultiStackedBar = () => {
   const selectedPartners = useSelector((state: RootState) => state.selectedPartners.selectedPartners);
   const selectedPlastics = useSelector((state: RootState) => state.selectedPlastics.selectedPlastics);
   const selectedFacilities = useSelector((state: RootState) => state.selectedFacilities.selectedFacilities);
-  // const validPartners = useSelector((state: RootState) => state.validPartners.partners);
   const validFacilities = useSelector((state: RootState) => state.validFacilities.Facilities);
   const selectedPartnerFacilities = useSelector((state: RootState) => state.selectedPartnerFacilities.selectedPartnerFacilities);
   const plastics = useSelector((state: RootState) => state.recyclingRecords);
@@ -56,9 +55,7 @@ const FacilityFootprint = () => {
 
   return (
     <div className="dashcomponent">
-      <DashboardDisplayHeader headerText="Plastic Footprint & Recycle Rates / Facility" />
-      <CoverageBar facilities={validFacilities} filteredRecords={filteredRecords} totalCoverage={totalCoverage} clickable dispatch={dispatch} />
-      <CoverageBar facilities={validFacilities} filteredRecords={records} selectedFacilities={selectedFacilities} totalCoverage={globalCoverage} clickable dispatch={dispatch} isBottom />
+      {/* <DashboardDisplayHeader headerText="Plastic Footprint & Recycle Rates / Partner" /> */}
       {selectedFacilities.map(facility => (
         <FacilityDetails
           key={facility.facilityID}
@@ -87,44 +84,6 @@ const ErrorComponent = ({ error }: { error: string }) => (
   <div>{`ERROR: ${error}`}</div>
 );
 
-const CoverageBar = ({ facilities, selectedFacilities, filteredRecords, totalCoverage, clickable = false, dispatch, isBottom = false }: any) => (
-  <div className={`flex gap-1 mb-2 ${clickable ? 'overflow-hidden' : 'rounded overflow-hidden min-h-[70px]'}`}>
-    {facilities.map((facility: { facilityID: string, facilityName: string }, index: number) => {
-      const facilityRecords = filteredRecords.filter((record: { FacilityID: string }) => record.FacilityID === facility.facilityID);
-      const facilitySummaries = calculateSummaries(facilityRecords);
-      const facilityCoverage = facilitySummaries.reduce((coverage, summary) => coverage + summary.quantity, 0);
-      const coveragePercentage = (facilityCoverage / totalCoverage) * 100;
-
-      const isSelected = selectedFacilities?.some((f: { facilityID: string }) => f.facilityID === facility.facilityID) ?? false;
-      const displayLabel = facility.facilityName === 'Mixed' ? 'MIXED' : facility.facilityName;
-
-
-      return (
-        <div
-          key={index}
-          className={`flex items-end justify-left min-w-[50px] text-white rounded-sm text-sm font-regular  ${clickable ? 'cursor-pointer' : ''} ${
-            coveragePercentage === 0 ? 'hidden' :
-            isBottom ? ` h-4 ${isSelected ? COLORS_FACILITY[facility.facilityID] : COLORS_FACILITIES_LIGHTER[facility.facilityID]}` : COLORS_FACILITY[facility.facilityID]
-            
-          }`}
-          onClick={clickable ? () => dispatch(toggleFacility(facility as unknown as FacilitiesRecord)) : undefined}
-          style={{
-            width: `${coveragePercentage}%`,
-            transition: "background-color 200ms ease",
-          }}
-        >
-          <div className={`p-2 w-0  ${isBottom ? 'hidden' : ''}`}>   
-            {displayLabel}
-            <div>
-              {coveragePercentage.toFixed(1)}%
-            </div>
-          </div>
-        </div>
-      );
-    })}
-  </div>
-);
-
 const FacilityDetails = ({ facility, filteredRecords, selectedPlastics, sortConfig, requestSort, totalCoverage, largestQuantity }: any) => {
   const facilityRecords = filteredRecords.filter((record: { FacilityID: string }) => record.FacilityID === facility.facilityID);
   const facilitySummaries = calculateSummaries(facilityRecords);
@@ -146,20 +105,20 @@ const FacilityDetails = ({ facility, filteredRecords, selectedPlastics, sortConf
   const { totalQuantity, largestFootprintPercentage } = calculateStatistics(filteredSummaries);
 
   return (
-    <div className="mt-8 mb-12">
+    <div className="m-4">
       <div className="flex items-center mb-2">
-      <span className={`inline-block w-1 h-3 rounded-full mr-2 ${COLORS_FACILITY[facility.facilityID]}`}></span>
+        <span className={`inline-block w-1 h-3 rounded-full mr-2 ${COLORS_FACILITIES[facility.facilityID]}`}></span>
         <h3 className="mr-4">{facility.facilityName}</h3>
         <div className="flex-grow border-t border-neutral-200 mx-4" style={{ height: '1px' }}></div>
         <h3 className="ml-4">{coveragePercentage.toFixed(1)}%</h3>
       </div>
-      <div className="overflow-x-auto">
+      <div className="overflow-x-auto mb-12 ">
         <table className="min-w-full table-auto">
           <thead className="cursor-pointer text-xs text-right">
             <tr className="h-12">
               <th className="text-neutral-400 text-xs text-left min-w-[80px] font-normal">Plastic</th>
               <th onClick={() => requestSort('percentage')} className={`text-left min-w-[60px] font-normal ${getHeaderClass('percentage', sortConfig)}`}>Footprint</th>
-              <th className={`min-w-[80px] font-normal ${getHeaderClass('percentage', sortConfig)}`}></th>
+              <th className={`min-w-[60px] font-normal ${getHeaderClass('percentage', sortConfig)}`}></th>
               <th className={`text-left font-normal ${getHeaderClass('percentage', sortConfig)}`}></th>
               <th onClick={() => requestSort('recycled')} className={`min-w-[60px] font-normal ${getHeaderClass('recycled', sortConfig)}`}>Recycled</th>
               <th onClick={() => requestSort('recyclingLossRate')} className={`min-w-[60px] font-normal ${getHeaderClass('recyclingLossRate', sortConfig)}`}>R Loss</th>
@@ -198,7 +157,7 @@ const SummaryRow = ({ item, totalQuantity, largestQuantity}: any) => {
         </span>
       </td>
       <td className="text-left max-w-[60px]">{footprintPercentage.toFixed(1)}%</td>
-      <td className="text-right w-[80px]">{item.quantity.toFixed(1)}&nbsp;Tn</td>
+      <td className="text-right w-[60px] text-neutral-400">{item.quantity.toFixed(1)}Tn</td>
       <td className="w-[100%] px-[20px]">
         <div
           className="h-[34px] text-left overflow-hidden rounded-sm flex"
@@ -242,7 +201,7 @@ const calculateStatistics = (summaries: ReturnType<typeof calculateSummaries>) =
   const largestFootprintPercentage = summaries.reduce((max, item) => item.quantity > max.quantity ? item : max, summaries[0]);
   return { totalQuantity, largestFootprintPercentage };
 };
-//havnt done this yet
+
 const filterRecords = (records: RecyclingRecord[], selectedPartners: any[], selectedPartnerFacilities: any[], selectedFacilities: any[]) => {
   return records.filter(record => {
     const partnerMatch = selectedPartners.some(partner => partner.CompanyID === record.PartnerCompanyID);
@@ -260,4 +219,4 @@ const calculateTotalCoverage = (facilities: any[], records: RecyclingRecord[]) =
   }, 0);
 };
 
-export default FacilityFootprint;
+export default FacilityFootprintMultiStackedBar;

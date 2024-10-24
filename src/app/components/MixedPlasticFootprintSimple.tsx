@@ -105,9 +105,9 @@ const MixedPlasticFootprintSimple = () => {
   return (
     <div className="dashcomponent">
       <div className="flex flex-col gap-3 overflow-hidden h-full">
-      <DashboardDisplayHeader
+      {/* <DashboardDisplayHeader
         headerText="Mixed Plastic Footprint"
-      />
+      /> */}
         <div className="flex-grow flex gap-1 h-[128px]">
           {sortedSelectedData.map((item, index) => {
             const totalWidthPercentage =

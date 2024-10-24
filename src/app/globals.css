@@ -29,6 +29,9 @@ body {
 .dm-mono {
   font-family: 'DM Mono', monospace;
 }
+.inter {
+  font-family: 'Inter', sans-serif;
+}
 
 @layer base {
   input[type="checkbox"] {
@@ -55,14 +58,15 @@ body {
 
 .dashcomponent{
   background-color: #FFFCF2;
-  border-radius: 0.5rem;
+  border-radius: 0.25rem;
   border: 1px solid #d1d5db;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
-  padding: 2rem;
+  padding: .5rem;
   /* margin-top:0px; */
   font-size:small;
   flex-grow: 1;
   width: 50%;
+  /* z-index: 0; */
 
 }
 
@@ -76,21 +80,14 @@ body {
 }
 
     .responsive-padding {
-      padding: 50px;
+      padding: 40px;
       padding-top: 0px;
-    }
-
-    @media (min-width: 768px) {
-      .responsive-padding {
-        padding: 100px;
-        padding-top: 0px;
-      }
     }
 
     @media (min-width: 1024px) {
       .responsive-padding {
-        padding: 200px;
-        padding-top: 0px;
+        padding: 80px;
+        /* padding-top: 0px; */
       }
       /* .dashcomponent{
         padding: 0rem;

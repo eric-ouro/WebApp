@@ -4,9 +4,9 @@ import Dropdowns from './Dropdowns';
 
 const Navbar: React.FC = () => {
   return (
-    <nav className="w-full mb-3 rounded-lg text-xs">
+    <nav className="">
       <div>
-        <div className="my-24 ">
+        {/* <div className="my-24 ">
             <Image
             src="logo_thin_ouro_plastic.svg" // Path to the logo in the public folder
             alt="OURO Logo"
@@ -14,7 +14,7 @@ const Navbar: React.FC = () => {
             height={36} // Adjust the height as needed (e.g., 16px)
             className="w-[36px] h-[36px] mx-auto"
             />
-        </div>
+        </div> */}
       </div>
       <div className="flex items-center justify-between w-full " >
         <div className="flex items-center">

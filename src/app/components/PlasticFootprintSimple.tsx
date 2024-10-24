@@ -72,10 +72,10 @@ const PlasticFootprintSimple = () => {
   return (
     <div className="dashcomponent">
       <div className="flex flex-col gap-3 overflow-hidden h-full">
-       <DashboardDisplayHeader
+       {/* <DashboardDisplayHeader
        headerText="Plastic Footprint"
-       />
-       <div className="flex-grow flex gap-1 h-[128px]">
+       /> */}
+       <div className="flex-grow flex gap-1 h-[64px]">
           {sortedSelectedData.map((item, index) => {
             const totalWidthPercentage =
               (item.quantity / totalSelectedQuantity) * 100;
@@ -84,11 +84,11 @@ const PlasticFootprintSimple = () => {
             return (
                <div
                 key={index}
-                className="relative flex flex-col items-center min-w-[40px] w-full text-white font-regular"
+                className="relative flex flex-col justify-left  min-w-[40px] w-full text-white font-regular"
                 style={{ width: `${totalWidthPercentage.toFixed(1)}%` }}
               >
                 <div
-                  className={`flex-grow flex-col items-end justify-left w-full min-h-[24px] rounded-sm ${
+                  className={`flex-grow flex-col w-full min-h-[24px] items-end rounded-sm ${
                     selectedPlastics.includes(item.label)
                       ? MAPPING_LIGHT[item.label]
                       : "bg-neutral-300" }`}

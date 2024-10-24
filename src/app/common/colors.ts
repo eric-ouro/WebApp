@@ -37,7 +37,7 @@ import { PartnerCompanyID, Plastic } from "./types";
     2: 'bg-custom-yellow',
     3: 'bg-custom-blue',
     4: 'bg-custom-sky',
-    5: 'bg-custom-orange',
+    5: 'bg-custom-green',
     6: 'bg-custom-pink',
   };
 
@@ -49,7 +49,7 @@ import { PartnerCompanyID, Plastic } from "./types";
     3: 'bg-custom-neutral-brown-lighter',
     4: 'bg-custom-neutral-brown-lighterMedium',
   };
-  export const COLORS_FACILITY: Record<any, string> = {
+  export const COLORS_FACILITIES: Record<any, string> = {
     1: 'bg-custom-neutral-green-darker',
     16 : 'bg-custom-neutral-green-medium',
   };

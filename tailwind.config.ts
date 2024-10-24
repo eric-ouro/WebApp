@@ -33,44 +33,44 @@ module.exports = {
       },
       colors: {
         'custom-red': {
-          DEFAULT: '#FF6B6B',  // Original color
-          darker: '#B34747',   // 30% darker color
-          lighter: '#FF9E9E',  // 25% lighter color
+          DEFAULT: '#FF7B7B',  // Original color adjusted with 10% more tan
+          darker: '#C35757',   // 30% darker color adjusted with 10% more tan
+          lighter: '#FFAEAE',  // 25% lighter color adjusted with 10% more tan
         },
         'custom-blue': {
-          DEFAULT: '#6B67FF',
-          darker: '#4743B3',
-          lighter: '#9E9BFF',  // 25% lighter color
+          DEFAULT: '#7B77FF',  // Original color adjusted with 10% more tan
+          darker: '#5753C3',   // 30% darker color adjusted with 10% more tan
+          lighter: '#AEABFF',  // 25% lighter color adjusted with 10% more tan
         },
         'custom-brown': {
-          DEFAULT: '#ac835a',  // New default color
-          darker: '#755b3f',   // 30% darker color
-          lighter: '#d1a885',  // 25% lighter color
+          DEFAULT: '#BC937A',  // New default color adjusted with 10% more tan
+          darker: '#856B4F',   // 30% darker color adjusted with 10% more tan
+          lighter: '#E1B895',  // 25% lighter color adjusted with 10% more tan
         },
         'custom-yellow': {
-          DEFAULT: '#EDCF0E',
-          darker: '#A5910A',
-          lighter: '#F3E55F',  // 25% lighter color
+          DEFAULT: '#FDCB0A',  // Original color
+          darker: '#B58E08',   // 30% darker color
+          lighter: '#FDE68A',  // 25% lighter color
         },
         'custom-sky': {
-          DEFAULT: '#80D4FA',
-          darker: '#5996B3',
-          lighter: '#A3E3FD',  // 25% lighter color
+          DEFAULT: '#90E4FA',  // Original color adjusted with 10% more tan
+          darker: '#6996C3',   // 30% darker color adjusted with 10% more tan
+          lighter: '#B3F3FD',  // 25% lighter color adjusted with 10% more tan
         },
         'custom-orange': {
-          DEFAULT: '#FFB300',
-          darker: '#B37C00',
-          lighter: '#FFC94D',  // 25% lighter color
+          DEFAULT: '#FFC310',  // Original color adjusted with 10% more tan
+          darker: '#C38C10',   // 30% darker color adjusted with 10% more tan
+          lighter: '#FFD95D',  // 25% lighter color adjusted with 10% more tan
         },
         'custom-pink': {
-          DEFAULT: '#DE82E0',
-          darker: '#9A5B9B',
-          lighter: '#E8A3E9',  // 25% lighter color
+          DEFAULT: '#EE92F0',  // Original color adjusted with 10% more tan
+          darker: '#AA6BA6',   // 30% darker color adjusted with 10% more tan
+          lighter: '#F8B3F9',  // 25% lighter color adjusted with 10% more tan
         },
         'custom-green': {
-          DEFAULT: '#4CAF51',
-          darker: '#347136',
-          lighter: '#79D17D',  // 25% lighter color
+          DEFAULT: '#5CBF61',  // Original color adjusted with 10% more tan
+          darker: '#447146',   // 30% darker color adjusted with 10% more tan
+          lighter: '#89E18D',  // 25% lighter color adjusted with 10% more tan
         },
         'custom-neutral-brown': {
           darker: '#8B7D74',
@@ -87,7 +87,10 @@ module.exports = {
           lighterMedium: '#D1E1C6',  // 20% lighter than medium
         },
         'custom-light-tan':{
-          DEFAULT: '#f7f4e9;'
+          DEFAULT: '#FFFCF2;'
+        },
+        'custom-bright-tan':{
+          DEFAULT: '#FDD01E',
         }
         
       },

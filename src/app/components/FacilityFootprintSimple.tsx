@@ -1,151 +1,124 @@
 "use client";
 import React, { useState } from "react";
-import { COLORS_LIGHT } from "../common/colors";
-import { RecyclingRecord } from "../common/types";
+import { COLORS_FACILITIES, COLORS_FACILITIES_LIGHTER } from "../common/colors";
 import { useSelector, useDispatch } from "react-redux";
-import { RootState } from "../store";
-import  setToFacility from "../store/selectedFacilitiesSlice";
+import { RootState } from "@/app/store";
+import { toggleFacility } from "@/app/store/selectedFacilitiesSlice";
 import DashboardDisplayHeader from "./DashboardDisplayHeader";
+import { calculateItemRatios } from "@/app/utils/calculateItemRatios";
+import { calculateSummaries } from "@/app/utils/calculateSummaries";
+import { FacilitiesRecord, RecyclingRecord } from '../common/types';
 
-// Define the SortKey type
-type SortKey = 'recycled' | 'quantity';
 
 const FacilityFootprintSimple = () => {
-  
   const selectedPartners = useSelector((state: RootState) => state.selectedPartners.selectedPartners);
+  const selectedPlastics = useSelector((state: RootState) => state.selectedPlastics.selectedPlastics);
   const selectedFacilities = useSelector((state: RootState) => state.selectedFacilities.selectedFacilities);
+  const validPartners = useSelector((state: RootState) => state.validPartners.partners);
+  const validFacilities = useSelector((state: RootState) => state.validFacilities.Facilities);
+  const selectedPartnerFacilities = useSelector((state: RootState) => state.selectedPartnerFacilities.selectedPartnerFacilities);
   const plastics = useSelector((state: RootState) => state.recyclingRecords);
   const dispatch = useDispatch();
 
-  const [sortConfig, setSortConfig] = useState<{ key: SortKey, direction: 'ascending' | 'descending' }>({ key: 'recycled', direction: 'descending' });
 
   if (plastics.status === "loading") {
-    return <div className="bg-neutral-100 rounded-lg border shadow-sm p-6 mt-4 h-[114px]">
-        <div className="h4 w-[180px] rounded-full bg-neutral-300">&nbsp;</div>
-      </div>;
+    return <LoadingComponent />;
   }
 
   if (plastics.status === "failed") {
-    return <div>{`ERROR: ${plastics.error}`}</div>;
+    return <ErrorComponent error={plastics.error ?? "Unknown error"} />;
   }
 
   const { records } = plastics;
+  const filteredRecords = filterRecords(records, selectedPartners, selectedPartnerFacilities, selectedFacilities);
 
-  const filteredRecords = records.filter((record: RecyclingRecord) => {
-    const partnerMatch = selectedPartners.some(partner => partner.CompanyID === record.PartnerCompanyID);
-    const facilityMatch = selectedFacilities.some(facility => facility.facilityID === record.FacilityID);
-    return partnerMatch && facilityMatch;
-  });
+  
 
-  const requestSort = (key: SortKey) => {
-    let direction: 'ascending' | 'descending' = 'ascending';
-    if (sortConfig.key === key && sortConfig.direction === 'ascending') {
-      direction = 'descending';
-    }
-    setSortConfig({ key, direction });
-  };
-
-  const getHeaderClass = (key: SortKey) => {
-    return sortConfig.key === key ? 'text-black' : 'text-neutral-400';
-  };
-
-  const totalQuantity = filteredRecords.reduce((sum, record) => {
-    const recordTotalQuantity = Object.values(record.RecyclingData).reduce((acc, data) => acc + data.Quantity, 0);
-    return sum + recordTotalQuantity;
-  }, 0);
-
-  const sortedFacilities = [...selectedFacilities].map((facility, index) => {
-    const facilityRecords = filteredRecords.filter(record => record.FacilityID === facility.facilityID);
-    const facilityTotalQuantity = facilityRecords.reduce((sum, record) => {
-      const recordTotalQuantity = Object.values(record.RecyclingData).reduce((acc, data) => acc + data.Quantity, 0);
-      return sum + recordTotalQuantity;
-    }, 0);
-    const recycleRate = facilityTotalQuantity > 0 ? (facilityRecords.reduce((sum, record) => sum + Object.values(record.RecyclingData).reduce((acc, data) => acc + data.Recycled, 0), 0) / facilityTotalQuantity) * 100 : 0;
-
-    return {
-      ...facility,
-      facilityTotalQuantity,
-      recycleRate,
-      color: COLORS_LIGHT[index % Object.keys(COLORS_LIGHT).length], // Assign color based on index
-    };
-  }).sort((a, b) => {
-    switch (sortConfig.key) {
-      case 'quantity':
-        return sortConfig.direction === 'ascending' ? a.facilityTotalQuantity - b.facilityTotalQuantity : b.facilityTotalQuantity - a.facilityTotalQuantity;
-      case 'recycled':
-        return sortConfig.direction === 'ascending' ? a.recycleRate - b.recycleRate : b.recycleRate - a.recycleRate;
-      default:
-        return 0;
-    }
-  });
+  const totalCoverage = calculateTotalCoverage(selectedFacilities, filteredRecords);
+  const globalCoverage = calculateTotalCoverage(validFacilities, records);
 
   return (
-    <div className="dashcomponent">
-      <DashboardDisplayHeader
-            headerText="Facility Breakdown"
-          />
-      <div className="flex mb-4 gap-1 rounded overflow-hidden min-h[70px]">
-        {sortedFacilities.map((facility, index) => {
-          const isSelected = selectedFacilities.some(f => f.facilityID === facility.facilityID);
-          
-          return (
-            <div
-              key={index}
-              className={`flex items-end justify-left h-full min-w-[50px] text-white rounded-sm text-sm font-regular cursor-pointer ${
-                isSelected 
-                ? facility.color 
-                : "bg-neutral-300"
-              }`}
-              onClick={() => {
-                const newSelectedFacilities = isSelected
-                  ? selectedFacilities.filter((f) => f.facilityID !== facility.facilityID)
-                  : [...selectedFacilities, facility];
-                dispatch(setToFacility(newSelectedFacilities));
-              }}
-              style={{
-                width: `${facility.recycleRate}%`,
-                transition: "background-color 200ms ease",
-              }}
-            >
-              <div className="p-2  h-28">
-                {facility.facilityName}
-                <div>
-                {facility.recycleRate.toFixed(1)}%
-                </div>
-              </div>
-            </div>
-          );
-        })}
-      </div>
-      <div className="overflow-x-auto">
-        <table className="min-w-full bg-white table-auto">
-          <thead className="cursor-pointer text-xs text-right ">
-            <tr className="h-12">
-              <th className="text-neutral-400 text-xs text-left min-w-[100px] w-full font-normal">Facility</th>
-              <th onClick={() => requestSort('recycled')} className={`min-w-[100px] font-normal ${getHeaderClass('recycled')}`}>Coverage</th>
-              <th onClick={() => requestSort('recycled')} className={`min-w-[100px] font-normal ${getHeaderClass('recycled')}`}>Recycle Rate</th>
-              <th onClick={() => requestSort('quantity')} className={`min-w-[100px] font-normal ${getHeaderClass('quantity')}`}>Tonnage</th>
-            </tr>
-          </thead>
-          <tbody>
-            {sortedFacilities.map((facility) => (
-              <tr className="align-middle h-8 text-right" key={facility.facilityID}>
-                <td>
-                  <span className="flex items-center text-left">
-                    <span className={`inline-block w-3 h-3 rounded-full mr-2 ${facility.color}`}></span>
-                    {facility.facilityName}, {facility.city}
-                  </span>
-                </td>
-                <td className="max-w-[60px]">--%</td>
-                <td className="max-w-[60px]">{facility.recycleRate.toFixed(1)}%</td>
-                <td className="max-w-[60px]">{facility.facilityTotalQuantity.toFixed(1)}&nbsp;Tn</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+    <div className="dashcomponent ">
+    <div className="flex flex-col gap-3 h-full">
+      {/* <DashboardDisplayHeader headerText="Plastic Footprint & Recycle Rates / Partner" /> */}
+      {/* <div className="flex-col flex-grow"> */}
+      <CoverageBar facilities={validFacilities} filteredRecords={filteredRecords} totalCoverage={totalCoverage} clickable dispatch={dispatch} />
+      <CoverageBar facilities={validFacilities} filteredRecords={records} selectedFacilities={selectedFacilities} totalCoverage={globalCoverage} clickable dispatch={dispatch} isBottom />
+      {/* </div> */}
+    </div>
     </div>
   );
+};
+
+
+
+const LoadingComponent = () => (
+  <div className="bg-neutral-100 rounded-lg border shadow-sm p-6 h-[214px]">
+    <div className="h4 w-[180px] rounded-full bg-neutral-300">&nbsp;</div>
+  </div>
+);
+
+const ErrorComponent = ({ error }: { error: string }) => (
+  <div>{`ERROR: ${error}`}</div>
+);
+
+const CoverageBar = ({ facilities, selectedFacilities, filteredRecords, totalCoverage, clickable = false, dispatch, isBottom = false }: any) => (
+    <div className={`flex  gap-1 
+     ${clickable ? 'overflow-hidden' : 'rounded overflow-hidden min-h-[70px]'}` +
+     `${isBottom ? 'h-[12px]' : 'h-full flex-grow'}`
+     }
+     >
+      {facilities.map((facility: { facilityID: string, facilityName: string }, index: number) => {
+        const facilityRecords = filteredRecords.filter((record: { FacilityID: string }) => record.FacilityID === facility.facilityID);
+        const facilitySummaries = calculateSummaries(facilityRecords);
+        const facilityCoverage = facilitySummaries.reduce((coverage, summary) => coverage + summary.quantity, 0);
+        const coveragePercentage = (facilityCoverage / totalCoverage) * 100;
+
+        const isSelected = selectedFacilities?.some((f: { facilityID: string }) => f.facilityID === facility.facilityID) ?? false;
+        const displayLabel = facility.facilityName === 'Mixed' ? 'MIXED' : facility.facilityName;
+
+
+        return (
+          <div
+            key={index}
+            className={`flex justify-left min-w-[50px] text-white rounded-sm text-sm font-regular items-end justify-start ${clickable ? 'cursor-pointer' : ''} ${
+              coveragePercentage === 0 ? 'hidden' :
+              isBottom ? ` h-4  ${isSelected ? COLORS_FACILITIES[facility.facilityID] : COLORS_FACILITIES_LIGHTER[facility.facilityID]}` : COLORS_FACILITIES[facility.facilityID]
+              
+            }`}
+            onClick={clickable ? () => dispatch(toggleFacility(facility as unknown as FacilitiesRecord)) : undefined}
+            style={{
+              width: `${coveragePercentage}%`,
+              transition: "background-color 200ms ease",
+            }}
+          >
+            <div className={`p-2 w-0 flex-col ${isBottom ? 'hidden' : ''}`}>   
+              <div>{displayLabel}</div>
+              <div>
+                {coveragePercentage.toFixed(1)}%
+              </div>
+            </div>
+          </div>
+        );
+      })}
+    </div>
+);
+
+const filterRecords = (records: RecyclingRecord[], selectedPartners: any[], selectedPartnerFacilities: any[], selectedFacilities: any[]) => {
+  return records.filter(record => {
+    const partnerMatch = selectedPartners.some(partner => partner.CompanyID === record.PartnerCompanyID);
+    const partnerFacilityMatch = selectedPartnerFacilities.some(facility => facility.facilityID === record.PartnerFacilityID);
+    const facilityMatch = selectedFacilities.some(facility => facility.facilityID === record.FacilityID);
+    return partnerMatch && partnerFacilityMatch && facilityMatch;
+  });
+};
+
+const calculateTotalCoverage = (facilities: any[], records: RecyclingRecord[]) => {
+  return facilities.reduce((sum, facility) => {
+    const facilityRecords = records.filter(record => record.FacilityID === facility.facilityID);
+    const facilitySummaries = calculateSummaries(facilityRecords);
+    return sum + facilitySummaries.reduce((coverage, summary) => coverage + summary.quantity, 0);
+  }, 0);
 };
 
 export default FacilityFootprintSimple;
