@@ -65,7 +65,7 @@ body {
   /* margin-top:0px; */
   font-size:small;
   flex-grow: 1;
-  width: 50%;
+  width: 100%;
   /* z-index: 0; */
 
 }
@@ -79,18 +79,19 @@ body {
   height: 320px;
 }
 
-    .responsive-padding {
-      padding: 40px;
-      padding-top: 0px;
-    }
+.responsive-padding {
+  padding: 40px;
+  padding-top: 40px;
+}
 
-    @media (min-width: 1024px) {
-      .responsive-padding {
-        padding: 80px;
-        /* padding-top: 0px; */
-      }
-      /* .dashcomponent{
-        padding: 0rem;
-      } */
-    }
-  
+
+@media (min-width: 1280px) {
+  .responsive-padding {
+    padding: 80px;
+    /* padding-top: 0px; */
+  }
+  .dashcomponent{
+    width: 50%;
+  }
+}
+

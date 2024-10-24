@@ -120,7 +120,7 @@ const PlasticFootprintMultiStackedBar = () => {
               <th onClick={() => requestSort('percentage')} className={` text-left min-w-[60px] font-normal ${getHeaderClass('percentage')}`}>Footprint</th>
               <th  className={` min-w-[60px] font-normal ${getHeaderClass('percentage')}`}> </th>
               <th  className={`text-left font-normal ${getHeaderClass('percentage')}`}> </th>
-              <th onClick={() => requestSort('recycled')} className={` min-w-[80px] font-normal ${getHeaderClass('recycled')}`}>Recycled</th>
+              <th onClick={() => requestSort('recycled')} className={` min-w-[60px] font-normal ${getHeaderClass('recycled')}`}>Recycled</th>
               <th onClick={() => requestSort('recyclingLossRate')} className={` min-w-[60px] font-normal ${getHeaderClass('recyclingLossRate')}`}>R Loss</th>
               <th onClick={() => requestSort('processingLossRate')} className={` min-w-[60px] font-normal ${getHeaderClass('processingLossRate')}`}>P Loss</th>
             </tr>
@@ -150,7 +150,7 @@ const PlasticFootprintMultiStackedBar = () => {
                   <td className="text-left max-w-[60px] text-neutral-400">{item.quantity.toFixed(1).padStart(4, '0')}Tn</td>
                   
                   
-                  <td className="w-[100%] px-[20px]">
+                  <td className="w-[100%] px-[10px]">
                     <div
                       className="h-[34px]  text-left overflow-hidden rounded-sm  flex ]"
                       style={{ width: `${Math.max(normalizedWidth, 10)}%`, minWidth }}

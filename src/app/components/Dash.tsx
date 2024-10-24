@@ -26,7 +26,7 @@ const Dash = () => {
 
   return (
     <div>
-       <div className="sticky top-0 z-50 w-full mb-3 text-xs bg-custom-light-tan py-6 px-20 shadow-lg">
+       <div className="sticky top-0 z-50 w-full mb-3 text-xs bg-custom-light-tan py-6 px-[40px] xl:px-[80px] shadow-lg">
         <Navbar />
       </div>
     
@@ -34,7 +34,7 @@ const Dash = () => {
         <div className="flex flex-col gap-3">
           <h2 className="text-4xl inter mr-4 font-bold" >All Plastics</h2>
           <div className=" border-b border-neutral-400 mb-2" ></div>
-          <div className="flex flex-row gap-3">
+          <div className="flex flex-col lg:flex-row gap-3">
             <PlasticFootprintSimple />
             <PlasticFootprintMultiStackedBar />
           </div>
@@ -43,7 +43,7 @@ const Dash = () => {
           <div className="flex flex-col gap-3">
           <h2 className="text-4xl inter mr-4 font-bold" >Mixed Plastic</h2>
           <div className=" border-b border-neutral-400 mb-2" ></div>
-          <div className="flex flex-row gap-3">
+          <div className="flex flex-col lg:flex-row gap-3">
           <MixedPlasticFootprintSimple />
             <MixedPlasticFootprintMultiStackedBar />
           </div>
@@ -52,7 +52,7 @@ const Dash = () => {
         <div className="flex flex-col gap-3">
           <h2 className="text-4xl inter mr-4 font-bold" >Partners</h2>
           <div className=" border-b border-neutral-400 mb-2" ></div>
-          <div className="flex flex-row gap-3">
+          <div className="flex flex-col lg:flex-row gap-3">
           <PartnerFootprintSimple />
           <PartnerFootprintMultiStackedBar />
           </div>
@@ -61,7 +61,7 @@ const Dash = () => {
         <div className="flex flex-col gap-3">
           <h2 className="text-4xl inter mr-4 font-bold" >My Facilities</h2>
           <div className=" border-b border-neutral-400 mb-2" ></div>
-          <div className="flex flex-row gap-3">
+          <div className="flex flex-col lg:flex-row gap-3">
           <FacilityFootprintSimple />
           <FacilityFootprintMultiStackedBar />
           

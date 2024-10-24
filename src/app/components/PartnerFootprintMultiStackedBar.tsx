@@ -158,7 +158,7 @@ const SummaryRow = ({ item, totalQuantity, largestQuantity}: any) => {
       </td>
       <td className="text-left max-w-[60px]">{footprintPercentage.toFixed(1)}%</td>
       <td className="text-right w-[60px] text-neutral-400">{item.quantity.toFixed(1)}Tn</td>
-      <td className="w-[100%] px-[20px]">
+      <td className="w-[100%] px-[10px]">
         <div
           className="h-[34px] text-left overflow-hidden rounded-sm flex"
           style={{ width: `${Math.max(normalizedWidth * 100, 10)}%`, minWidth }}

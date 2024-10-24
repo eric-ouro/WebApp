@@ -112,7 +112,7 @@ const Dropdowns: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col" ref={dropdownRef}>
+    <div className="flex flex-col " ref={dropdownRef}>
       <div className="">
         <div className="flex">
           <div className="flex items-bottom">

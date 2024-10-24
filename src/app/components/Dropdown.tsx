@@ -35,10 +35,10 @@ const Dropdown: React.FC<DropdownProps> = ({
   };
 
   return (
-    <div className="relative">
+    <div className="relative ">
       <button onClick={onToggle} className={`flex flex-col focus:outline-none  ${subTitle ? 'items-start' : 'items-end'}`}>
         <div className="flex justify-between items-start w-full h-8">
-          <div className="text-sm uppercase text-neutral-600 opacity-70 text-left">{subTitle}</div>
+          <div className="text-xs  uppercase text-neutral-600 opacity-70 text-left">{subTitle}</div>
           
         </div>
         <div className="flex justify-between items-top text-left uppercase" >
